@@ -1,0 +1,65 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  margin-left: 25%;
+}
+
+h2 {
+  font-family: "Raleway", sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+
+h3, p{
+  position: relative;
+  padding: 0;
+  margin-top: 1%;
+  font-family: "Raleway", sans-serif;
+  font-size: 17px;
+  color: #080808;
+  -webkit-transition: all 0.4s ease 0s;
+  -o-transition: all 0.4s ease 0s;
+  transition: all 0.4s ease 0s;
+}
+
+h1 {
+  font-size:40px;
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  width:500px;
+  text-align:center;
+  white-space:nowrap;
+  padding-bottom:13px;
+}
+
+h1:before {
+  background-color: #c50000;
+  content: '';
+  display: block;
+  height: 3px;
+  width: 120px;
+  margin-bottom: 10px;
+}
+h1:after {
+  background-color: #c50000;
+  content: '';
+  display: block;
+  right:65%;
+    position:absolute;
+  height: 3px;
+  width: 120px;
+  margin-bottom: 0.07em;
+
+}
+
+.reponseTitle{
+  font-weight: 500;
+  left: 3%;
+
+}
+.reponses{
+  font-weight: 200;
+  left: 3%;
+}

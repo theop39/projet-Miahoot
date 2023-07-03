@@ -1,0 +1,18 @@
+
+<h1 class="title">CONFIGURATION DU COMPTE</h1>
+<hr>
+<section *ngIf="miahootUserObs | async as muObs ">
+    <section *ngIf="userObs | async as U">
+            <div [formGroup] = "formGroup" class="form">
+                <mat-label>{{muObs.name}} </mat-label>
+                <mat-form-field>
+                    <input matInput type="text" formControlName="name" placeholder="Name" required/>
+                </mat-form-field>
+                <mat-form-field>
+                  <ngx-mat-file-input [formControl]="formGroup.controls.photoFile">
+                  </ngx-mat-file-input>
+                </mat-form-field>
+                <button mat-raised-button color="primary" (click)="update()" routerLink="" routerLinkActive="active" ariaCurrentWhenActive="page">SAVE</button>
+            </div>
+    </section>
+</section>

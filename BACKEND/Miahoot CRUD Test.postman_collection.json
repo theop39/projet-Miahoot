@@ -1,0 +1,3304 @@
+{
+	"info": {
+		"_postman_id": "e2073a86-63c9-49b1-be26-c933a57de795",
+		"name": "Miahoot CRUD Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26104741"
+	},
+	"item": [
+		{
+			"name": "Create a new Miahoot",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Miahoot is created\", function () {",
+							"    pm.response.to.have.status(201);",
+							"",
+							"    const response = pm.response.json()",
+							"",
+							"    pm.collectionVariables.set('idMetier', response.idMetier)",
+							"    pm.collectionVariables.set('idEnseignant', response.idEnseignant)",
+							"",
+							"    /*",
+							"    const response = pm.response.text()",
+							"",
+							"    try {",
+							"         pm.expect(response).matches(new RegExp(\"^MH-[a-zA-Z0-9]{5}$\"))",
+							"         pm.collectionVariables.set('idMetier', response)",
+							"         pm.collectionVariables.set('idEnseignant', \"45\")",
+							"    }catch(e) {",
+							"        throw new Error(\"[POST] Erreur lors de la création d'un nouveau Miahoot, la réponse n'est pas un id metier valide\")",
+							"    } ",
+							"   */",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nom\": \"QCM seance 2\",\n  \"idEnseignant\": \"45\",\n  \"questions\": [\n    {\n      \"label\": \"Quelle est la couleur du cheval blanc d'Henri IV\",\n       \"reponses\": [\n        {\n          \"label\": \"rouge\",\n          \"estValide\": false\n        },\n        {\n          \"label\": \"blanc\",\n          \"estValide\": true\n        },\n        {\n          \"label\": \"vert\",\n          \"estValide\": false\n        }\n      ]\n    }\n  ]\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v0/miahoots",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v0",
+						"miahoots"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Created",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"velit sed quis\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}"
+				},
+				{
+					"name": "In case the author could not be validated",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"velit sed quis\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Create a new Miahoot,  Case idEnseignant is NULL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Erreur POST, creation d'un Miahoot idEnseignant null\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nom\": \"QCM seance 3\",\n  \"idEnseignant\": null,\n  \"questions\": [\n    {\n      \"label\": \"Quelle est la couleur du cheval blanc d'Henri IV\",\n      \"reponses\": [\n        {\n          \"label\": \"blanc\",\n          \"estValide\": true\n        }\n      ]\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v0/miahoots",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v0",
+						"miahoots"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Created",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"velit sed quis\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}"
+				},
+				{
+					"name": "In case the author could not be validated",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"velit sed quis\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Create a new Miahoot,  Case nom is NULL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Erreur POST, creation d'un Miahoot attribut nom null\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nom\": null,\n  \"idEnseignant\": \"45\",\n  \"questions\": [\n    {\n      \"label\": \"Quelle est la couleur du cheval blanc d'Henri IV\",\n      \"reponses\": [\n        {\n          \"label\": \"blanc\",\n          \"estValide\": true\n        }\n      ]\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v0/miahoots",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v0",
+						"miahoots"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Created",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"velit sed quis\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}"
+				},
+				{
+					"name": "In case the author could not be validated",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"velit sed quis\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Create a new Miahoot,  Cas une question avec un label NULL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Erreur creation d'un Miahoot, l'attribut label de la question du Miahoot est NULL\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nom\": \"Sondage cours semaine 12\",\n  \"idEnseignant\": \"103\",\n  \"questions\": [\n    {\n      \"label\": \"\",\n      \"reponses\": [\n        {\n          \"label\": \"13\",\n          \"estValide\": false\n        }\n      ]\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v0/miahoots",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v0",
+						"miahoots"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Created",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"velit sed quis\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}"
+				},
+				{
+					"name": "In case the author could not be validated",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"velit sed quis\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Create a new Miahoot,  Cas une question qui contient une reponse avec un label NULL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Erreur creation d'un Miahoot qui contient une question avec une reponse dont l'attribut label est null\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nom\": \"Sondage cours semaine 12\",\n  \"idEnseignant\": \"103\",\n  \"questions\": [\n    {\n      \"label\": \"Que vaut le rayon terrestre ?\",\n      \"reponses\": [\n        {\n          \"label\": \"6500 km\",\n          \"estValide\": true\n        },\n        {\n            \"label\" : \"\",\n            \"estValide\": false\n        }\n      ]\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v0/miahoots",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v0",
+						"miahoots"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Created",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"velit sed quis\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}"
+				},
+				{
+					"name": "In case the author could not be validated",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"velit sed quis\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Create a new Miahoot,  cas deux Miahoot ont le même nom pour un enseignant donné",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Erreur, Creation d'un Miahoot qui a le même nom qu'un autre Miahoot et qui appartient au même enseignant\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nom\": \"{{nom}}\",\n  \"idEnseignant\": {{idEnseignant}},\n  \"questions\": [\n    {\n      \"label\": \"Quelle est la couleur du cheval blanc d'Henri IV\",\n      \"reponses\": [\n        {\n          \"label\": \"12\",\n          \"estValide\": true\n        }\n      ]\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v0/miahoots",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v0",
+						"miahoots"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Created",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"velit sed quis\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}"
+				},
+				{
+					"name": "In case the author could not be validated",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"velit sed quis\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Get un Miahoot qui n'existe pas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Erreur, Get un Miahoot qui n'existe pas en base\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/v0/miahoots/99999",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v0",
+						"miahoots",
+						"99999"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}"
+				},
+				{
+					"name": "The author was not found",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Get a Miahoot Existant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get un Miahoot existant\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var miahootResponse = pm.response.json();",
+							"    const idMetier = pm.collectionVariables.get('idMetier')",
+							"    const idEnseignant = pm.collectionVariables.get('idEnseignant')",
+							"    const expectedResponse = JSON.parse(`",
+							"{",
+							"  \"nom\": \"QCM seance 2\",",
+							"  \"idEnseignant\": \"${idEnseignant}\",",
+							"  \"idMetier\": \"${idMetier}\",",
+							"  \"questions\": [",
+							"    {",
+							"      \"label\": \"Quelle est la couleur du cheval blanc d'Henri IV\",",
+							"      \"reponses\": [",
+							"        {",
+							"          \"label\": \"rouge\",",
+							"          \"estValide\": false",
+							"        },",
+							"        {",
+							"          \"label\": \"blanc\",",
+							"          \"estValide\": true",
+							"        },",
+							"        {",
+							"          \"label\": \"vert\",",
+							"          \"estValide\": false",
+							"        }",
+							"      ]",
+							"    }",
+							"  ]",
+							"}`)",
+							"    pm.expect(JSON.stringify(miahootResponse)).to.eq(JSON.stringify(expectedResponse))",
+							"    ",
+							"    console.log(JSON.stringify(miahootResponse))",
+							"    console.log(JSON.stringify(expectedResponse))",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/v0/miahoots/{{idMetier}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v0",
+						"miahoots",
+						"{{idMetier}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}"
+				},
+				{
+					"name": "The author was not found",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Create d'un deuxième Miahoot pour un enseignant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Creation d'un deuxieme Miahoot pour un enseignant\", function () {",
+							"    pm.response.to.have.status(201);",
+							"",
+							"    //const response = pm.response.text()",
+							"",
+							"    /* ",
+							"    try {",
+							"         pm.expect(response).matches(new RegExp(\"^MH-[a-zA-Z0-9]{5}$\"))",
+							"    }catch(e) {",
+							"        throw new Error(\"[POST] Erreur lors de la création d'un nouveau Miahoot, la réponse n'est pas un id metier valide\")",
+							"    } */",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nom\": \"QCM seance 3\",\n  \"idEnseignant\": 45,\n  \"questions\": [\n    {\n      \"label\": \"Quelle est la formule du PH ?\",\n      \"reponses\": [\n        {\n         \"label\": \"pH = log [H3O+] / 2\",\n          \"estValide\": false\n        },\n        {\n          \"label\": \"pH = - log [H3O+]\",\n          \"estValide\": true\n        }\n      ]\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v0/miahoots",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v0",
+						"miahoots"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Created",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"velit sed quis\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}"
+				},
+				{
+					"name": "In case the author could not be validated",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"velit sed quis\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Get tous les Miahoot pour un enseignant donné",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get tous les Miahoot pour un enseignant donné\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/v0/miahoots/?id={{idEnseignant}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v0",
+						"miahoots",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{idEnseignant}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}"
+				},
+				{
+					"name": "The author was not found",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Get tous les Miahoot pour un enseignant donné, Cas 0 Miahoot pour l'enseignant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get tous les Miahoot pour un enseignant qui n'en possède pas\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/v0/miahoots/?id=99999",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v0",
+						"miahoots",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "99999"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}"
+				},
+				{
+					"name": "The author was not found",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Update un Miahoot, cas : modfication de l'attribut nom",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Update un Miahoot existant, modification du nom\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    const idEnseignant = pm.collectionVariables.get('idEnseignant')",
+							"    const idMetier = pm.collectionVariables.get('idMetier')",
+							"",
+							"    const expectedResponse = ",
+							"`{",
+							"  \"nom\": \"QCM seance 2[A FAIRE AVANT PROCHAIN TP]\",",
+							"  \"idEnseignant\": \"${idEnseignant}\",",
+							"  \"idMetier\": \"${idMetier}\",",
+							"  \"questions\": [",
+							"    {",
+							"      \"label\": \"Quelle est la couleur du cheval blanc d'Henri IV\",",
+							"      \"reponses\": [",
+							"        {",
+							"          \"label\": \"rouge\",",
+							"          \"estValide\": false",
+							"        },",
+							"        {",
+							"          \"label\": \"blanc\",",
+							"          \"estValide\": true",
+							"        },",
+							"        {",
+							"          \"label\": \"vert\",",
+							"          \"estValide\": false",
+							"        }",
+							"      ]",
+							"    }",
+							"  ]",
+							"}`",
+							"    ",
+							"    pm.expect(JSON.stringify(jsonData)).to.eql(JSON.stringify(JSON.parse(expectedResponse)));",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nom\": \"QCM seance 2[A FAIRE AVANT PROCHAIN TP]\",\n  \"idEnseignant\": \"{{idEnseignant}}\",\n  \"idMetier\": \"{{idMetier}}\",\n  \"questions\": [\n    {\n      \"label\": \"Quelle est la couleur du cheval blanc d'Henri IV\",\n      \"reponses\": [\n        {\n          \"label\": \"rouge\",\n          \"estValide\": false\n        },\n        {\n          \"label\": \"blanc\",\n          \"estValide\": true\n        },\n        {\n          \"label\": \"vert\",\n          \"estValide\": false\n        }\n      ]\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v0/miahoots/{{idMetier}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v0",
+						"miahoots",
+						"{{idMetier}}"
+					]
+				},
+				"description": "Will update the author if found"
+			},
+			"response": [
+				{
+					"name": "Updated",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}"
+				},
+				{
+					"name": "In case the author could not be validated",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The author was not found",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Update un Miahoot, cas : Erreur modfication de l'attribut nom (2 Miahoot on le même nom pour un même enseignant)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Update le nom d'un Miahoot qui fait en sorte qu'un enseignant a deux Miahoot ayant le même nom\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nom\": \"QCM seance 3\",\n  \"idEnseignant\": \"{{idEnseignant}}\",\n  \"idMetier\": \"{{idMetier}}\",\n  \"questions\": [\n    {\n      \"label\": \"Quelle est la couleur du cheval blanc d'Henri IV\",\n      \"reponses\": [\n        {\n          \"label\": \"rouge\",\n          \"estValide\": false\n        },\n        {\n          \"label\": \"blanc\",\n          \"estValide\": true\n        },\n        {\n          \"label\": \"vert\",\n          \"estValide\": false\n        }\n      ]\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v0/miahoots/{{idMetier}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v0",
+						"miahoots",
+						"{{idMetier}}"
+					]
+				},
+				"description": "Will update the author if found"
+			},
+			"response": [
+				{
+					"name": "Updated",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}"
+				},
+				{
+					"name": "In case the author could not be validated",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The author was not found",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Update un Miahoot, cas : modfication de l'attribut nom valeur NULL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Update un Miahoot existant, modification du label d'une question avec comme valeur la chaine vide\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nom\": \"\",\n  \"idEnseignant\": \"{{idEnseignant}}\",\n  \"idMetier\": \"{{idMetier}}\",\n  \"questions\": [\n    {\n      \"label\": \"Quelle est la couleur du cheval blanc d'Henri IV\",\n      \"reponses\": [\n        {\n          \"label\": \"rouge\",\n          \"estValide\": false\n        },\n        {\n          \"label\": \"blanc\",\n          \"estValide\": true\n        },\n        {\n          \"label\": \"vert\",\n          \"estValide\": false\n        }\n      ]\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v0/miahoots/{{idMetier}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v0",
+						"miahoots",
+						"{{idMetier}}"
+					]
+				},
+				"description": "Will update the author if found"
+			},
+			"response": [
+				{
+					"name": "Updated",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}"
+				},
+				{
+					"name": "In case the author could not be validated",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The author was not found",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Update un Miahoot, cas : modfication de l'attribut label d'une question avec valeur NULL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Update un Miahoot existant, modification du label d'une reponse a une question, avec comme valeur la chaine vide\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nom\": \"QCM seance 2[A FAIRE AVANT PROCHAIN TP]\",\n  \"idEnseignant\": \"{{idEnseignant}}\",\n  \"idMetier\": \"{{idMetier}}\",\n  \"questions\": [\n    {\n      \"label\": \"\",\n      \"reponses\": [\n        {\n          \"label\": \"rouge\",\n          \"estValide\": false\n        },\n        {\n          \"label\": \"blanc\",\n          \"estValide\": true\n        },\n        {\n          \"label\": \"vert\",\n          \"estValide\": false\n        }\n      ]\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v0/miahoots/{{idMetier}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v0",
+						"miahoots",
+						"{{idMetier}}"
+					]
+				},
+				"description": "Will update the author if found"
+			},
+			"response": [
+				{
+					"name": "Updated",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}"
+				},
+				{
+					"name": "In case the author could not be validated",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The author was not found",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Update un Miahoot, cas : modfication de l'attribut idEnseignant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Update un Miahoot existant, modification de l'attribut idEnseignant\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nom\": \"QCM seance 2[A FAIRE AVANT PROCHAIN TP]\",\n  \"idEnseignant\": \"46\",\n  \"idMetier\": \"{{idMetier}}\",\n  \"questions\": [\n    {\n      \"label\": \"Quelle est la couleur du cheval blanc d'Henri IV\",\n      \"reponses\": [\n        {\n          \"label\": \"rouge\",\n          \"estValide\": false\n        },\n        {\n          \"label\": \"blanc\",\n          \"estValide\": true\n        },\n        {\n          \"label\": \"vert\",\n          \"estValide\": false\n        }\n      ]\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v0/miahoots/{{idMetier}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v0",
+						"miahoots",
+						"{{idMetier}}"
+					]
+				},
+				"description": "Will update the author if found"
+			},
+			"response": [
+				{
+					"name": "Updated",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}"
+				},
+				{
+					"name": "In case the author could not be validated",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The author was not found",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Update un Miahoot, cas : modfication ajout de questions sans reponses",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Update un Miahoot existant, modification : ajouts de questions sans reponses\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    const idEnseignant = pm.collectionVariables.get('idEnseignant')",
+							"    const idMetier = pm.collectionVariables.get('idMetier')",
+							"",
+							"    const expectedResponse = ",
+							"`{",
+							"  \"nom\": \"QCM seance 2[A FAIRE AVANT PROCHAIN TP]\",",
+							"  \"idEnseignant\": \"${idEnseignant}\",",
+							"  \"idMetier\": \"${idMetier}\",",
+							"  \"questions\": [",
+							"    {",
+							"      \"label\": \"Quelle est la couleur du cheval blanc d'Henri IV\",",
+							"      \"reponses\": [",
+							"        {",
+							"          \"label\": \"rouge\",",
+							"          \"estValide\": false",
+							"        },",
+							"        {",
+							"          \"label\": \"blanc\",",
+							"          \"estValide\": true",
+							"        },",
+							"        {",
+							"          \"label\": \"vert\",",
+							"          \"estValide\": false",
+							"        }",
+							"      ]",
+							"    }",
+							"    ,",
+							"    {",
+							"        \"label\" : \"Que vaut le rayon terrestre ?\",",
+							"        \"reponses\" : []  ",
+							"    }",
+							"  ]",
+							"}`",
+							"    ",
+							"    pm.expect(JSON.stringify(jsonData)).to.eql(JSON.stringify(JSON.parse(expectedResponse)));",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nom\": \"QCM seance 2[A FAIRE AVANT PROCHAIN TP]\",\n  \"idEnseignant\": \"{{idEnseignant}}\",\n  \"idMetier\": \"{{idMetier}}\",\n  \"questions\": [ \n    {\n      \"label\": \"Quelle est la couleur du cheval blanc d'Henri IV\",\n      \"reponses\": [\n        {\n          \"label\": \"rouge\",\n          \"estValide\": false\n        },\n        {\n          \"label\": \"blanc\",\n          \"estValide\": true\n        },\n        {\n          \"label\": \"vert\",\n          \"estValide\": false\n        }\n      ]\n    }\n    ,\n    {\n        \"label\" : \"Que vaut le rayon terrestre ?\",\n        \"reponses\" : []  \n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v0/miahoots/{{idMetier}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v0",
+						"miahoots",
+						"{{idMetier}}"
+					]
+				},
+				"description": "Will update the author if found"
+			},
+			"response": [
+				{
+					"name": "Updated",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}"
+				},
+				{
+					"name": "In case the author could not be validated",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The author was not found",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Update un Miahoot, cas : modfication ajout de questions avec reponses",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Update un Miahoot existant, modification : ajout d'une question avec reponses\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    const idEnseignant = pm.collectionVariables.get('idEnseignant')",
+							"    const idMetier = pm.collectionVariables.get('idMetier')",
+							"",
+							"    const expectedResponse = ",
+							"`",
+							"{",
+							"  \"nom\": \"QCM seance 2[A FAIRE AVANT PROCHAIN TP]\",",
+							"  \"idEnseignant\": \"${idEnseignant}\",",
+							"  \"idMetier\": \"${idMetier}\",",
+							"  \"questions\": [",
+							"    {",
+							"      \"label\": \"Quelle est la couleur du cheval blanc d'Henri IV\",",
+							"      \"reponses\": [",
+							"        {",
+							"          \"label\": \"rouge\",",
+							"          \"estValide\": false",
+							"        },",
+							"        {",
+							"          \"label\": \"blanc\",",
+							"          \"estValide\": true",
+							"        },",
+							"        {",
+							"          \"label\": \"vert\",",
+							"          \"estValide\": false",
+							"        }",
+							"      ]",
+							"    }",
+							"    ,",
+							"    {",
+							"        \"label\" : \"Que vaut le rayon terrestre ?\",",
+							"        \"reponses\" : []  ",
+							"    }, ",
+							"    {",
+							"        \"label\" : \"Quelle est la distance Terre/Lune\",",
+							"        \"reponses\": ",
+							"        [",
+							"            {",
+							"            \"label\": \"384 400 km\",",
+							"             \"estValide\" : true",
+							"            },",
+							"            {",
+							"             \"label\" : \"420 000 km\",",
+							"              \"estValide\" : false",
+							"            }, ",
+							"            {",
+							"              \"label\" : \"310 000 km\",",
+							"               \"estValide\": false",
+							"            }",
+							"        ]",
+							"    }",
+							"  ]",
+							"}",
+							"`",
+							"    ",
+							"    pm.expect(JSON.stringify(jsonData)).to.eql(JSON.stringify(JSON.parse(expectedResponse)));",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nom\": \"QCM seance 2[A FAIRE AVANT PROCHAIN TP]\",\n  \"idEnseignant\": \"{{idEnseignant}}\",\n  \"idMetier\": \"{{idMetier}}\",\n  \"questions\": [\n    {\n      \"label\": \"Quelle est la couleur du cheval blanc d'Henri IV\",\n      \"reponses\": [\n        {\n          \"label\": \"rouge\",\n          \"estValide\": false\n        },\n        {\n          \"label\": \"blanc\",\n          \"estValide\": true\n        },\n        {\n          \"label\": \"vert\",\n          \"estValide\": false\n        }\n      ]\n    }\n    ,\n    {\n        \"label\" : \"Que vaut le rayon terrestre ?\",\n        \"reponses\" : []  \n    }, \n    {\n        \"label\" : \"Quelle est la distance Terre/Lune\",\n        \"reponses\": \n        [\n            {\n            \"label\": \"384 400 km\",\n             \"estValide\" : true\n            },\n            {\n             \"label\" : \"420 000 km\",\n              \"estValide\" : false\n            }, \n            {\n              \"label\" : \"310 000 km\",\n               \"estValide\": false\n            }\n        ]\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v0/miahoots/{{idMetier}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v0",
+						"miahoots",
+						"{{idMetier}}"
+					]
+				},
+				"description": "Will update the author if found"
+			},
+			"response": [
+				{
+					"name": "Updated",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}"
+				},
+				{
+					"name": "In case the author could not be validated",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The author was not found",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Delete un Miahoot existant en base",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Delete un Miahoot existant en base\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v0/miahoots/{{idMetier}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v0",
+						"miahoots",
+						"{{idMetier}}"
+					]
+				},
+				"description": "Will update the author if found"
+			},
+			"response": [
+				{
+					"name": "Updated",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}"
+				},
+				{
+					"name": "In case the author could not be validated",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The author was not found",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Delete un Miahoot qui n'existe pas en base",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Delete  un miahoot qui n'existe pas en base\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v0/miahoots/99999",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v0",
+						"miahoots",
+						"99999"
+					]
+				},
+				"description": "Will update the author if found"
+			},
+			"response": [
+				{
+					"name": "Updated",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}"
+				},
+				{
+					"name": "In case the author could not be validated",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "The author was not found",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"culpa Excepteur sunt dolor voluptate\",\n  \"id\": -63365530\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/authors/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "-90715985.49614279",
+									"description": "(Required) Author's id"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "idMetier",
+			"value": ""
+		},
+		{
+			"key": "idEnseignant",
+			"value": ""
+		},
+		{
+			"key": "nom",
+			"value": ""
+		}
+	]
+}

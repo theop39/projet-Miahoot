@@ -1,0 +1,28 @@
+<ng-container *ngIf="stateObs | async as HOBS">
+    <ng-container *ngIf="HOBS.user?.id === HOBS.qcm?.idEnseignant else isParticipating">
+        <section class="list">
+            <h1 class="title">RÉSULTATS DU MIAHOOT {{HOBS?.qcm?.idMetier}} : {{HOBS?.qcm?.nom}}</h1>
+            <ng-container *ngFor="let tab of HOBS.historiquesReponses; index as i">
+                <h2>QUESTION {{i + 1}}: {{HOBS.qcm.questions[i].label}} </h2>
+                <ng-container *ngFor="let val of tab.tabReponses; index as j" >
+                    <ng-container *ngIf="HOBS.qcm.questions[i].reponses[j].estValide else estInvalide">
+                        <h3 class="reponseTitle" style="color: darkgreen">LA RÉPONSE {{i+1}}.{{j + 1}} EST CORRECTE: {{HOBS.qcm.questions[i].reponses[j].label}}</h3>
+                    </ng-container>
+                    <ng-template #estInvalide>
+                        <h3 class="reponseTitle" style="color: darkred" >LA RÉPONSE {{i+1}}.{{j + 1}} EST INCORRECTE: {{HOBS.qcm.questions[i].reponses[j].label}}</h3>
+                    </ng-template>
+                    <h3 class="reponses">CHOIX DES PARTICIPANTS : <b>{{val}}</b></h3>
+                </ng-container>
+                <hr>
+            </ng-container>
+        </section>
+    </ng-container>
+    <ng-template #isParticipating>
+        <section>
+            <h1 class="title">MERCI POUR VOTRE PARTICIPATION AU MIAHOOT {{HOBS?.qcm?.idMetier}} : {{HOBS?.qcm?.nom}}</h1>
+        </section>
+    </ng-template>
+    <button [routerLink]="['/accueil']" [routerLinkActive]="['active']" ariaCurrentWhenActive="page"  (click)="delete(idMiahootProjete)"> TERMINER LE QCM </button>
+</ng-container>
+
+

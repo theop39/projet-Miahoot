@@ -1,0 +1,26 @@
+<ng-container *ngIf="stateObs | async as STATE">
+    <h1 class="title"> VOS MIAHOOTS </h1>
+    <ng-container *ngFor="let qcm of STATE.QCMs">
+        <mat-accordion>
+            <mat-expansion-panel (opened)="isOpen = true"
+                                 (closed)="isOpen = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Miahoot : {{qcm.nom}}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Currently I am {{isOpen ? 'open' : 'closed'}}
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <ng-container *ngFor="let question of qcm.questions">
+                    <p>question : {{question.label}}</p>
+                    <ng-container *ngFor="let reponse of question.reponses">
+                        <p>reponse : {{reponse.label}}</p>
+                        <p>valide : {{reponse.estValide}}</p>
+                    </ng-container>
+                </ng-container>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </ng-container>
+
+</ng-container>
